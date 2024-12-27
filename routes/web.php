@@ -10,15 +10,22 @@ use App\Http\Controllers\DashboardGejalaController;
 use App\Http\Controllers\DashboardPenyakitController;
 use App\Http\Controllers\DataPasienController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
+
 Route::get('/', [PublicController::class,'landingpage']);
 Route::get('/landingpage', [PublicController::class,'landingpage'])->name('landingpage');
 Route::get('/info', [PublicController::class,'info'])->name('info');
 
-Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
-Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
+
+
+Route::middleware('guest')->group(function () {
+    Route::get('/login', [AuthController::class, 'index'])->name('login')->middleware('guest');
+    Route::post('/login', [AuthController::class, 'verify'])->name('auth.verify');
+
+    Route::get('/register', [AuthController::class, 'registerView'])->name('register.view');
+    Route::post('/register', [AuthController::class, 'register'])->name('register');
+});
+
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::group(['middleware'=>'auth:admin'], function(){
     Route::resource('/dashboard/penyakit', DashboardPenyakitController::class);
@@ -43,8 +50,6 @@ Route::group(['middleware'=>'auth:user'], function(){
     Route::get('/diagnose/riwayat', [DiagnosisController::class, 'showHistory'])->name('diagnosa.riwayat');
 
 });
-
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 
 
