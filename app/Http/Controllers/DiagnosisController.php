@@ -7,6 +7,7 @@ use App\Models\Penyakit;
 use App\Models\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class DiagnosisController extends Controller
 {
@@ -168,9 +169,16 @@ class DiagnosisController extends Controller
     public function showResult(Request $request)
     {
         $penyakit = Penyakit::find($request->id);
+        $diagnosis = Diagnosis::where('user_id', Auth::id())->first(); // atau gunakan kondisi lain jika diperlukan
+
+        // Cek apakah diagnosis ada
+        if (!$diagnosis) {
+            return redirect()->back()->with('error', 'Diagnosis tidak ditemukan.');
+        }
         $rekomendasiObat = $penyakit->rekomendasi_obat ?? 'Tidak ada rekomendasi obat.';
         $pencegahan = $penyakit->deskripsi_solusi ?? 'Tidak ada informasi pencegahan.';
         $answerLog = session('answerLog', []);
+        $user = Auth::user();
 
         // Filter hanya gejala yang dijawab YA
         $gejalaYa = array_filter($answerLog, function ($value) {
@@ -179,6 +187,20 @@ class DiagnosisController extends Controller
 
         // Ambil data gejala berdasarkan ID gejala yang dijawab YA
         $gejalaTerpilih = Gejala::whereIn('id', array_keys($gejalaYa))->get();
+
+        $data1 = [
+            'diagnosis' => $diagnosis,
+            'penyakit' => $penyakit,
+            'gejalaTerpilih' => $gejalaTerpilih,
+            'rekomendasiObat' => $rekomendasiObat,
+            'pencegahan' => $pencegahan,
+            'user' => $user,
+        ];
+        
+        if($request->get('export') == 'pdf'){
+            $pdf = Pdf::loadView('user.dashboard.diagnosa.cetakpdf', $data1);
+            return $pdf->stream('Hasil Diagnosa.pdf');
+        }
 
         return view('user.dashboard.diagnosa.result', [
             'penyakit' => $penyakit,

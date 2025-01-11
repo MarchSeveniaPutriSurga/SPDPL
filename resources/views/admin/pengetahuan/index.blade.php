@@ -6,12 +6,6 @@
         <h1 class="h2 welcome-message">{{ $title }}</h1>
     </div>
 
-    @if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
-        {{ session('success') }}
-    </div>
-    @endif
-
     <div class="card shadow mb-4" style="margin: 10px;">
         <div class="card-body">
             <div class="d-flex justify-content-between mb-3">
@@ -27,31 +21,31 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($rules as $item)
-<tr>
-    <!-- Menampilkan nama penyakit -->
-    <td>{{ $item->penyakit->nama_penyakit }}</td>
+                        @foreach($rule as $item)
+                        <tr>
+                            <!-- Menampilkan nama penyakit -->
+                            <td>{{ $item->penyakit->nama_penyakit }}</td>
 
-    <!-- Menampilkan gejala -->
-    <td>
-        @if($item->gejala)
-            <span>{{ $item->gejala->nama_gejala }}</span><br>
-        @else
-            <span>Gejala tidak ditemukan</span><br>
-        @endif
-    </td>                      
+                            <!-- Menampilkan gejala -->
+                            <td>
+                                @if($item->gejala)
+                                    <span>{{ $item->gejala->nama_gejala }}</span><br>
+                                @else
+                                    <span>Gejala tidak ditemukan</span><br>
+                                @endif
+                            </td>                      
 
-    <!-- Aksi -->
-    <td>
-        <a href="{{ route('rule.edit', $item->id) }}" class="badge bg-info"><i class="fa-solid fa-pen"></i></a>
-        <form action="{{ route('rule.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this item?')">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="badge bg-danger border-0"><i class="fa-solid fa-trash-can"></i></button>
-        </form>
-    </td>
-</tr>
-@endforeach
+                                <!-- Aksi -->
+                                <td>
+                                    <a href="{{ route('rule.edit', $item->id) }}" class="badge bg-info"><i class="fa-solid fa-pen"></i></a>
+                                    <form action="{{ route('rule.destroy', $item->id) }}" method="POST" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this item?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="badge bg-danger border-0"><i class="fa-solid fa-trash-can"></i></button>
+                                    </form>
+                                </td>
+                            </tr>
+                            @endforeach
 
                     </tbody>                    
                 </table>
@@ -59,4 +53,23 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    @if (session('success'))
+        Swal.fire({
+            icon: 'success',
+            title: 'Berhasil!',
+            text: "{{ session('success') }}",
+        });
+    @endif
+
+    @if (session('error'))
+        Swal.fire({
+            icon: 'error',
+            title: 'Gagal!',
+            text: "{{ session('error') }}",
+        });
+    @endif
+</script>
 @endsection

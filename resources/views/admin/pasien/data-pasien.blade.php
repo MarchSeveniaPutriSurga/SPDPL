@@ -27,7 +27,7 @@
                         <td>{{ $user->profile->umur ?? '-' }}</td>
                         <td>{{ ucfirst($user->profile->gender ?? '-') }}</td>
                         <td>
-                            <a href="{{ route('patients.history', $user->id) }}" class="btn btn-primary btn-sm">Detail</a>
+                            <a href="{{ route('patients.history', $user->id) }}" class="btn btn-primary btn-sm"><i class="fa-regular fa-eye"></i></a>
                         </td>
                     </tr>
                     @endforeach

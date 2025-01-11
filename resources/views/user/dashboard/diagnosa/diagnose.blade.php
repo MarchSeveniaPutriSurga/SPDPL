@@ -39,10 +39,10 @@
                 <h5 class="modal-title" id="penyakitUnidentifiedModalLabel">Penyakit Tidak Terdeteksi</h5>
             </div>
             <div class="modal-body text-center">
-                Tidak ada penyakit yang terdeteksi berdasarkan gejala yang dipilih.
+                Maaf, tidak ada penyakit yang terdeteksi berdasarkan gejala yang Anda pilih. Kami sarankan untuk segera berkonsultasi dengan dokter.
             </div>
             <div class="modal-footer d-flex justify-content-center">
-                <a href="{{ route('diagnose') }}" class="btn btn-primary">Kembali ke Dashboard</a>
+                <a href="{{ route('diagnose') }}" class="btn btn-primary">Oke</a>
             </div>
         </div>
     </div>

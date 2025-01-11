@@ -16,7 +16,12 @@ class UserProfile extends Model
 
     public function getUmurAttribute($value)
     {
-        return $value . ' tahun'; // Contoh: "25" -> "25 tahun"
+        return $value . ' tahun';
+    }
+
+    public function getUmurAsliAttribute()
+    {
+        return $this->attributes['umur'];
     }
 
     public function getGenderAttribute($value)

@@ -2,27 +2,19 @@
 
 @section('content')
 <div class="container-fluid">
-    <!-- Header -->
-    <div class="d-flex flex-column justify-content-between align-items-start pt-3 pb-2 mb-3 border-bottom">
-        <h1 class="h2 welcome-message">{{ $title }}</h1>
+    <div class="d-flex align-items-center mb-5">
+        <span class="ms-3 text-dark user-name fs-8"><b>Hello!!</b> {{ $profile->user->name ?? Auth::user()->name }}</span>
+        <a href="{{ route('user_profiles.edit') }}" class="btn btn-custom ms-auto">
+            Edit Profile
+        </a>
     </div>
 
     <!-- Profile Card -->
     <div class="card">
         <div class="card-body">
-            <!-- User Info -->
-            <div class="d-flex align-items-center mb-5">
-                <img 
-                    src="{{ asset('img/user2-160x160.jpg') }}" 
-                    alt="User Image" width="100" height="100" class="rounded-circle">
-                <span class="ms-3 text-dark user-name fs-5">
-                    {{ $profile->user->name ?? Auth::user()->name }}
-                </span>
-                <a href="{{ route('user_profiles.edit') }}" class="btn btn-custom ms-auto">
-                    Edit Profil
-                </a>
+            <div class="d-flex flex-column justify-content-between align-items-start pt-3 pb-2 mb-3 border-bottom">
+                <h4>{{ $title }}</h4>
             </div>
-
             <!-- User Details -->
             <div class="row">
                 <!-- Left Column -->

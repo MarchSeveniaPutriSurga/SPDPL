@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Spike Free</title>
-  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('img/logoSP.png') }}" />
   <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
 </head>
 
@@ -44,8 +44,8 @@
                   </div>
                   <button type="submit" class="btn btn-primary w-100 fs-4 mb-4 rounded-2">Register</button>
                   <div class="d-flex align-items-center justify-content-center">
-                      <p class="fs-4 mb-0 fw-bold">Already have an Account?
-                      <a class="text-primary fw-bold ms-2" href="{{ route('login') }}">Sign In</a></p>
+                      <p class="fs-3 mb-0 fw-bold">Already have an Account?
+                      <a class="text-primary fs-3 fw-bold ms-2" href="{{ route('login') }}">Sign In</a></p>
                   </div>
                 </form>              
               </div>

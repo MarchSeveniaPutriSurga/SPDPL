@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Penyakit;
 use Illuminate\Http\Request;
 
 class PublicController extends Controller
@@ -11,6 +12,11 @@ class PublicController extends Controller
         return view('public.landingpage');
     }
     public function info(){
-        return view('public.info');
+        $penyakit = Penyakit::all();
+        return view('public.info', compact('penyakit'));
+    }
+    
+    public function alursistem(){
+        return view('public.alurSistem');
     }
 }

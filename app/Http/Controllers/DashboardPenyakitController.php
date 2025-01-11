@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Penyakit;
+use App\Models\Rule;
 
 use Illuminate\Http\Request;
 
@@ -63,7 +64,15 @@ class DashboardPenyakitController extends Controller
     // Menghapus penyakit
     public function destroy(Penyakit $penyakit)
     {
+        // Cek apakah penyakit sudah digunakan di tabel rule
+        $isUsedInRule = Rule::where('penyakit_id', $penyakit->id)->exists();
+
+        if ($isUsedInRule) {
+            return redirect()->route('penyakit.index')->with('error', 'Penyakit ini tidak bisa dihapus karena sudah digunakan dalam basis pengetahuan!');
+        }
+
         $penyakit->delete();
         return redirect()->route('penyakit.index')->with('success', 'Penyakit berhasil dihapus!');
     }
+
 }

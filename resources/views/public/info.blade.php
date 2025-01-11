@@ -38,13 +38,11 @@
           berdasarkan gejala yang diberikan. Beberapa penyakit yang tersedia dalam sistem ini antara lain Gastroesofagus 
           (GERD), Kanker Lambung, Gastroenteritis, Gastritis, dan Tukak Lambung.
         </p>
-        <ul>
-          <li><b>Gastroesofagus (GERD)</b> merupakan asam lambung naik ke esofagus atau kerongkongan, itu disebut penyakit asam lambung</li>
-          <li><b>Kanker Lambung</b> merupakan pertumbuhan sel lambung yang tidak normal dan tidak terkendali adalah penyebab kanker lambung. Pertumbuhan ini terjadi karena perubahan genetik yang terjadi pada sel lambung.</li>
-          <li><b> Gastritis</b>  biasanya disebut maag oleh orang awam, adalah peradangan lambung yang disebabkan oleh peningkatan sekresi asam lambung, yang menyebabkan iritasi dan peradangan pada lambung</li>
-          <li><b>Gastroenteritis</b> disebut sebagai flu perut, adalah infeksi pada usus atau perut yang disebabkan oleh beberapa jenis virus. Ini dapat menyebabkan mual, muntah, diare, kram perut, dan terkadang demam</li>
-          <li><b>Tukak Lambung</b> dikenal sebagai penyakit luka lambung (PUD), terjadi karena ketidakseimbangan antara faktor agresif seperti sekresi </li>
-        </ul>
+        @foreach ($penyakit as $item)
+            <ul>
+              <li>{!! $item->nama_penyakit !!} {!! $item->deskripsi !!}</li>
+            </ul>
+        @endforeach
       </div>
     </div>
     

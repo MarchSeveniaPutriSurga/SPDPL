@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Gejala;
+use App\Models\Rule;
 
 use Illuminate\Http\Request;
 
@@ -59,7 +60,15 @@ class DashboardGejalaController extends Controller
     // Menghapus gejala
     public function destroy(Gejala $gejala)
     {
+        // Cek apakah gejala sudah digunakan di tabel rule
+        $isUsedInRule = Rule::where('gejala_id', $gejala->id)->exists();
+
+        if ($isUsedInRule) {
+            return redirect()->route('gejala.index')->with('error', 'Gejala ini tidak bisa dihapus karena sudah digunakan dalam basis pengetahuan!');
+        }
+
         $gejala->delete();
         return redirect()->route('gejala.index')->with('success', 'Gejala berhasil dihapus!');
     }
+
 }

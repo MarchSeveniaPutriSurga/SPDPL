@@ -1,0 +1,20 @@
+.user-avatar {
+    width: 35px;
+    height: 35px;
+    background-color: #6c757d; /* Warna latar lingkaran */
+    color: #fff; /* Warna teks */
+    font-size: 16px; /* Ukuran font */
+    font-weight: bold; /* Membuat teks tebal */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: uppercase; /* Membuat teks kapital */
+}
+
+.user-avatar.rounded-circle {
+    border-radius: 50%; /* Membuat elemen menjadi lingkaran */
+}
+
+.MyProfileAva{
+    cursor: pointer;
+}

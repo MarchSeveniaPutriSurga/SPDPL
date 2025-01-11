@@ -30,7 +30,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="gejala_{{ $item->id }}" name="gejala_id[]" value="{{ $item->id }}" {{ in_array($item->id, old('gejala_id', [])) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="gejala_{{ $item->id }}">
-                                    {{ $item->nama_gejala }}
+                                    <b>{{ $item->kode_gejala }}</b>, {{ $item->nama_gejala }}
                                 </label>
                             </div>
                         @endforeach

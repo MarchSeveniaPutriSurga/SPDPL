@@ -5,10 +5,12 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>GastroCare</title>
-  <link rel="shortcut icon" type="image/png" href="../assets/images/logos/favicon.png" />
+  <link rel="shortcut icon" type="image/png" href="{{ asset('img/logoSP.png') }}" />
   <link rel="stylesheet" href="{{ asset('css/styles.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset('css/custom.css') }}" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/themify-icons/0.1.2/css/themify-icons.min.css">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 
 </head>
 
@@ -56,18 +58,26 @@
               </a>
             </li>
           </ul>
-          <div class="navbar-collapse justify-content-end px-0" id="navbarNav">
+          <div class="navbar-collapse justify-content-end px-5" id="navbarNav">
             <ul class="navbar-nav flex-row ms-auto align-items-center justify-content-end">
               <li class="nav-item dropdown">
-                    <a 
-                      class="nav-link nav-icon-hover d-flex align-items-center" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
-                      <img 
-                        src="{{ asset('img/user2-160x160.jpg') }}"alt="User Image" width="35" height="35" class="rounded-circle">
-                      <span class="ms-2 d-none d-md-inline text-dark user-name">{{ Auth::user()->name }}</span>
-                    </a>                
+                <div class="MyProfileAva nav-link nav-icon-hover d-flex align-items-center" href="javascript:void(0)" id="drop2" data-bs-toggle="dropdown" aria-expanded="false">
+                  <div 
+                    class="user-avatar d-flex justify-content-center align-items-center rounded-circle">
+                    {{
+                      collect(explode(' ', Auth::user()->name))
+                        ->take(2)
+                        ->map(function ($word) { return strtoupper(substr($word, 0, 1)); })
+                        ->implode('')
+                    }}
+                  </div>
+                  <span class="ms-2 text-dark user-name">
+                    {{ Auth::user()->name }}
+                  </span>
+                </div>            
                 <div class="dropdown-menu dropdown-menu-end dropdown-menu-animate-up" aria-labelledby="drop2">
                   <div class="message-body">
-                    <a href="{{ route('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none">Logout</a>
+                    <a href="{{ route('logout') }}" class="btn btn-outline-primary mx-3 mt-2 d-block shadow-none"><i class="fa-solid fa-arrow-right-from-bracket"></i> Logout</a>
                   </div>
                 </div>
               </li>
@@ -81,14 +91,7 @@
         <!--  Row 1 -->
         @yield('content')
       </div>
-      <footer class="main-footer">
-        <!-- To the right -->
-        <div class="float-right d-none d-sm-inline">
-          Program Studi Sistem Informasi
-        </div>
-        <!-- Default to the left -->
-        <strong>Copyright &copy; 2024 <a href="https://adminlte.io">AdminLTE.io</a>.</strong> All rights reserved.
-      </footer> 
+      @include('layouts.footer')
     </div>
   </div>
 

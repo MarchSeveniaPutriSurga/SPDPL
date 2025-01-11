@@ -32,7 +32,7 @@
                                 <input class="form-check-input gejala-checkbox" type="checkbox" id="gejala_{{ $item->id }}" name="gejala_id[]" value="{{ $item->id }}" 
                                 {{ in_array($item->id, old('gejala_id', explode(',', $rule->gejala_id))) ? 'checked' : '' }}>
                                 <label class="form-check-label" for="gejala_{{ $item->id }}">
-                                    {{ $item->nama_gejala }}
+                                    <b>{{ $item->kode_gejala }}</b>, {{ $item->nama_gejala }}
                                 </label>
                             </div>
                         @endforeach
@@ -42,25 +42,65 @@
                     @enderror
                 </div>
 
-                <button type="submit" class="btn btn-primary">Update</button>
+                <div class="d-flex my-3">
+                    <button type="submit" class="btn btn-primary">Update</button>
+                    <a href="/dashboard/rule" class="btn btn-secondary ms-3">
+                        Cancel
+                    </a>
+                </div>
             </div>
         </div>
     </form>
 </div>
 
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
-    // Batasi hanya satu checkbox yang dapat dipilih
-    const checkboxes = document.querySelectorAll('.gejala-checkbox');
-    checkboxes.forEach(checkbox => {
-        checkbox.addEventListener('change', () => {
-            // Cek jika lebih dari satu yang dipilih
-            const selectedCheckboxes = document.querySelectorAll('.gejala-checkbox:checked');
-            if (selectedCheckboxes.length > 1) {
-                alert('Hanya boleh memilih satu gejala.');
-                checkbox.checked = false;  // Batalkan pilihan
+    document.addEventListener('DOMContentLoaded', () => {
+        const gejalaCheckboxes = document.querySelectorAll('.gejala-checkbox');
+        const penyakitSelect = document.getElementById('penyakit_id');
+
+        async function handleCheckboxChange(checkbox) {
+            const checkedCount = Array.from(gejalaCheckboxes).filter(cb => cb.checked).length;
+
+            if (checkedCount > 1) {
+                await Swal.fire({
+                    icon: 'warning',
+                    title: 'Peringatan!',
+                    text: 'Anda hanya bisa memilih satu gejala.',
+                    confirmButtonText: 'OK',
+                });
+
+                checkbox.checked = false; // Batalkan pilihan terakhir
+                return; // Jangan lanjutkan ke pengecekan duplikasi
             }
+
+            if (checkbox.checked) {
+                const penyakitId = penyakitSelect.value;
+
+                // Kirim AJAX untuk memeriksa apakah gejala ini sudah digunakan
+                const response = await fetch(`/check-duplicate-gejala?penyakit_id=${penyakitId}&gejala_id=${checkbox.value}`);
+                const data = await response.json();
+
+                if (data.exists) {
+                    await Swal.fire({
+                        icon: 'error',
+                        title: 'Duplikasi Gejala',
+                        text: 'Gejala ini sudah digunakan untuk penyakit yang dipilih.',
+                        confirmButtonText: 'OK',
+                    });
+
+                    checkbox.checked = false; // Batalkan pilihan
+                }
+            }
+        }
+
+        gejalaCheckboxes.forEach((checkbox) => {
+            checkbox.addEventListener('change', () => handleCheckboxChange(checkbox));
         });
     });
 </script>
+
 
 @endsection

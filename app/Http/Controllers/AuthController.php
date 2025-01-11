@@ -23,10 +23,10 @@ class AuthController extends Controller
      
         if(Auth::guard('admin')->attempt(['email'=>$data['email'],'password'=>$data['password'], 'role'=>'admin'])){
             $request->session()->regenerate();
-            return redirect()->intended('/dashboard/penyakit');
+            return redirect()->intended('/dashboard');
         }else if(Auth::guard('user')->attempt(['email'=>$data['email'],'password'=>$data['password'], 'role'=>'user'])){
             $request->session()->regenerate();
-            return redirect()->intended('/user/dashboard');
+            return redirect()->intended('/profile');
         }else{
             return redirect(route('login'))->with('msg', 'email dan password salah');
         }
@@ -39,7 +39,7 @@ class AuthController extends Controller
         }else if(Auth::guard('user')->check()){
             Auth::guard('user')->logout();
         }
-        return redirect(route('login'));
+        return redirect(route('landingpage'));
     }
 
     public function registerView() : View

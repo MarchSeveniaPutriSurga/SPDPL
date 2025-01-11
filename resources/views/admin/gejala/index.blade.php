@@ -5,13 +5,6 @@
 <div class="d-flex flex-column justify-content-between align-items-start pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2 welcome-message">{{ $title }}</h1>
 </div>
-
-    @if(session()->has('success'))
-    <div class="alert alert-success" role="alert">
-    {{ session('success') }}
-    </div>
-    @endif
-
     <div class="card shadow mb-4" style="margin: 10px;">
         <div class="card-body">
             <div>
@@ -47,5 +40,27 @@
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        text: "{{ session('error') }}",
+    });
+</script>
+@endif
 
 @endsection

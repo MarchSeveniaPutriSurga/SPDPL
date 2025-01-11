@@ -82,7 +82,7 @@
                                 class="form-control" 
                                 id="umur" 
                                 name="umur" 
-                                value="{{ old('umur', $profile->umur ?? '') }}" 
+                                value="{{ old('umur', $profile->umur_asli ?? '') }}" 
                                 placeholder="Masukkan umur">
                             @error('umur')
                                 <div class="text-danger">{{ $message }}</div>

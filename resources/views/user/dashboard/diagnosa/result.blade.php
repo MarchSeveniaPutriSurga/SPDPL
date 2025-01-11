@@ -2,10 +2,9 @@
 
 @section('content')
     <div class="container">
-        <div class="d-flex my-3">
-            <a href="{{ route('diagnose') }}" class="btn btn-custom ms-auto">
-                Keluar
-            </a>
+        <div class="d-flex my-3 ms-auto gap-4 justify-content-end">
+            <a href="{{ route('diagnose') }}" class="btn btn-custom">Keluar</a>
+            <a href="{{ route('diagnose.result') }}?export=pdf" class="btn btn-danger">Export PDF</a>
         </div>
         <div class="card mt-5">
             <div class="card-body">

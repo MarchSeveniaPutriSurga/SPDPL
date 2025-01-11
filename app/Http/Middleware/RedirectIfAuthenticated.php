@@ -19,9 +19,9 @@ class RedirectIfAuthenticated extends RedirectIfAuthenticatedMiddleware
     public function handle(Request $request, Closure $next, string...$guards): Response | JsonResponse
     {
         if(Auth::guard('admin')->check()){
-            return redirect('/dashboard/penyakit');
+            return redirect('/dashboard');
         }else if(Auth::guard('user')->check()){
-            return redirect('/user/dashboard');
+            return redirect('/profile');
         }
 
         return $next($request);

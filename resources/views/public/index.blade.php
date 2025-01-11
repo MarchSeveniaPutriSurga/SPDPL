@@ -9,7 +9,7 @@
   <meta name="keywords" content="">
 
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
+  <link href="{{ asset('img/logoSP.png') }}" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Fonts -->
@@ -26,6 +26,7 @@
 
   <!-- Main CSS File -->
   <link href="{{ asset('user/css/main.css') }}" rel="stylesheet">
+  <link href="{{ asset('user/css/custom.css') }}" rel="stylesheet">
 </head>
 
 <body class="index-page">
@@ -33,7 +34,7 @@
   <header id="header" class="header d-flex align-items-center sticky-top" style="box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);">
     <div class="container-fluid container-xl position-relative d-flex align-items-center">
       
-      <a href="index.html" class="logo d-flex align-items-center me-auto">
+      <a href="{{ route('landingpage') }}" class="logo d-flex align-items-center me-auto">
         <!-- Tambahkan gambar sebelum teks -->
         <img src="{{ asset('img/logoSP.png') }}" alt="Logo" style="width: 40px; height: 40px; margin-right: 10px;">
         <span class="brand-text font-weight-bold" style="font-size: 1.5rem; font-weight: bold; display: block;">
@@ -44,6 +45,7 @@
       <nav id="navmenu" class="navmenu">
         <ul>
           <li class="nav-item"><a class="nav-link {{ Request::is('landingpage*') ? 'active' : ''}}" href="{{ route('landingpage') }}">Home</a></li>
+          <li class="nav-item"><a class="nav-link {{ Request::is('alursistem*') ? 'active' : ''}}" href="{{ route('alursistem') }}">Alur Sistem</a></li>
           <li class="nav-item"><a class="nav-link {{ Request::is('info*') ? 'active' : ''}}" href="{{ route('info') }}">Info</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
@@ -61,16 +63,7 @@
     {{-- </section> --}}
   </main>
 
-  <footer id="footer" class="footer">
-
-    <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Appland</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a>
-      </div>
-    </div>
-
-  </footer>
+ @include('public.footer')
 
   <!-- Scroll Top -->
   <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
@@ -87,6 +80,7 @@
 
   <!-- Main JS File -->
   <script src="{{ asset('user/js/main.js') }}"></script>
+  @stack('scripts')
 
 </body>
 
